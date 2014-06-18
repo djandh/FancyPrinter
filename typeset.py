@@ -5,7 +5,6 @@ and prints to stdout.
 
 author: Jon Hagg
 
-
 """
 
 import sys
@@ -21,8 +20,7 @@ class typeset(object):
         self.linebreaks=[]
         self._compute_OPT()    
         self.formatted=''
-        self.partition()
-        self.render()
+        self._partition()
 
 
     def _slack(self,i,j):
@@ -50,7 +48,7 @@ class typeset(object):
                 return self._aux_part(i,linebreaks)
 	
 
-    def partition(self):
+    def _partition(self):
         self.linebreaks=self._aux_part(len(self.words), [])
 
 
@@ -59,7 +57,7 @@ class typeset(object):
             self.formatted += self.words[i]+' '
             if i in self.linebreaks:
                 self.formatted += '\n'
-
+        print self.formatted
 	    
 
 
@@ -68,8 +66,8 @@ if __name__=='__main__':
     FILE=sys.argv[1]
     f=open(FILE)
     TEXT=f.read()
-    t=typeset(TEXT,30)
-    print(t.formatted)
+    t=typeset(TEXT)
+    t.render()
 
 
 
