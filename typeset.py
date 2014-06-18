@@ -11,7 +11,13 @@ import sys
 
 class typeset(object):
     
+    """
+    Initialization: splits input into array of words delimited
+    by whitespace, runs the DP algorithm, and creates formatted 
+    text.
 
+    Usage: to display formatted text, call render()
+    """
     def __init__(self, input, MAX_LEN=50):
 
         self.words=input.split()
@@ -21,7 +27,7 @@ class typeset(object):
         self._compute_OPT()    
         self.formatted=''
         self._partition()
-
+        self._format()
 
     def _slack(self,i,j):
         word_lengths=map(len, self.words[i:j+1])
@@ -52,13 +58,15 @@ class typeset(object):
         self.linebreaks=self._aux_part(len(self.words), [])
 
 
-    def render(self):
+    def _format(self):
         for i in range(len(self.words)):
             self.formatted += self.words[i]+' '
             if i in self.linebreaks:
                 self.formatted += '\n'
-        print self.formatted
-	    
+    
+
+    def render(self):
+	print(t.formatted)  
 
 
 if __name__=='__main__':
