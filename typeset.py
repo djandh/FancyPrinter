@@ -1,3 +1,13 @@
+
+"""
+Dynamic programming algorithm for typesetting. Minimizes "squared slack norm"
+and prints to stdout. 
+
+author: Jon Hagg
+
+
+"""
+
 import sys
 
 class typeset(object):
@@ -14,6 +24,7 @@ class typeset(object):
         self.partition()
         self.render()
 
+
     def _slack(self,i,j):
         word_lengths=map(len, self.words[i:j+1])
         s=self.MAX_LEN-sum(word_lengths)-(j-i)
@@ -24,13 +35,11 @@ class typeset(object):
 
 
     def _compute_OPT(self):
-	
         for j in range(1,len(self.OPT)):
             self.OPT[j]=min(self._slack(i,j-1)**2+self.OPT[i] for i in range(0,j))
 	
 	
     def _aux_part(self, j, linebreaks):
-    
         r=range(0,j)
         r.reverse()
         for i in r:
@@ -44,8 +53,8 @@ class typeset(object):
     def partition(self):
         self.linebreaks=self._aux_part(len(self.words), [])
 
-    def render(self):
 
+    def render(self):
         for i in range(len(self.words)):
             self.formatted += self.words[i]+' '
             if i in self.linebreaks:
@@ -54,8 +63,6 @@ class typeset(object):
 	    
 
 
-#s="alice and bob wrote a program to typeset a bunch of words. they didn't expect it to work the first time but were they in for a surprise"
-
 if __name__=='__main__':
 
     FILE=sys.argv[1]
@@ -63,10 +70,6 @@ if __name__=='__main__':
     TEXT=f.read()
     t=typeset(TEXT,30)
     print(t.formatted)
-    #print (t.OPT)
-    #print (t.linebreaks)
-
-
 
 
 
