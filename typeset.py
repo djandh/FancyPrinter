@@ -1,8 +1,7 @@
 
 """
 Dynamic programming algorithm for typesetting. Minimizes "squared slack norm"
-and prints to stdout. 
-
+and stores the result which can be printed or written to a file.
 author: Jon Hagg
 
 """
@@ -15,9 +14,8 @@ class typeset(object):
     Initialization: splits input into array of words delimited
     by whitespace, runs the DP algorithm, and creates formatted 
     text.
-
-    Usage: to display formatted text, call render()
     """
+
     def __init__(self, input, MAX_LEN=50):
 
         self.words=input.split()
@@ -65,8 +63,14 @@ class typeset(object):
                 self.formatted += '\n'
     
 
-    def render(self):
-	print(t.formatted)  
+    def display(self):
+	print(self.formatted)  
+
+
+    def write(self, file):
+        with open(file, 'w') as f:
+            f.write(self.formatted)
+            f.close()        
 
 
 if __name__=='__main__':
@@ -75,8 +79,8 @@ if __name__=='__main__':
     f=open(FILE)
     TEXT=f.read()
     t=typeset(TEXT)
-    t.render()
-
+    t.display()
+    t.write('output.txt')
 
 
 
